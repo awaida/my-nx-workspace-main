@@ -14,3 +14,9 @@
 ☐ Verify tags bounderies and automations with Nx (app -> project.json tags)
 ☐ Verify depConstraints in eslint.config.mjs in root (using bounderies tags)
 ☐ environments.ts and environments.prod.ts in apps/mini-crm/src/environments/
+☐ Run tests to verify if it works and then delete app.spec.ts content
+☐ Run build and verify if it works
+☐ Plan Agent for the starter  
+☐ Prepare prompts and use agents to execute the starter plan
+☐ Run dev and server in parallel and verify if it works
+☐ Run tests coverage and verify if it works
