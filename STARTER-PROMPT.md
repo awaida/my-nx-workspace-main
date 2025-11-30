@@ -282,21 +282,23 @@ Créer à la racine du projet.
 
 ### Étape 1 : Créer les libs Nx
 
+**⚠️ IMPORTANT** : Utiliser la syntaxe correcte avec `--name` et `--directory` pour garantir que les libs sont créées dans `libs/`
+
 ```bash
 # Lib UI partagée
-npx nx g @nx/angular:library shared-ui --unitTestRunner=vitest
+npx nx g @nx/angular:library --name=shared-ui --directory=libs/shared-ui --unitTestRunner=vitest
 
 # Lib data-access
-npx nx g @nx/angular:library data-access --unitTestRunner=vitest
+npx nx g @nx/angular:library --name=data-access --directory=libs/data-access --unitTestRunner=vitest
 
 # Lib feature-auth
-npx nx g @nx/angular:library feature-auth --unitTestRunner=vitest
+npx nx g @nx/angular:library --name=feature-auth --directory=libs/feature-auth --unitTestRunner=vitest
 
 # Lib feature-orders
-npx nx g @nx/angular:library feature-orders --unitTestRunner=vitest
+npx nx g @nx/angular:library --name=feature-orders --directory=libs/feature-orders --unitTestRunner=vitest
 
 # Lib layout (pour le layout system)
-npx nx g @nx/angular:library layout --unitTestRunner=vitest
+npx nx g @nx/angular:library --name=layout --directory=libs/layout --unitTestRunner=vitest
 ```
 
 Nx génère automatiquement :

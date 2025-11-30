@@ -435,6 +435,111 @@ Avant de créer un service HTTP ou un interceptor, vérifier :
 8. [ ] Les sélecteurs dans les tests sont-ils robustes (`data-testid`) ?
 9. [ ] Les requêtes réseau sont-elles attendues dans les tests E2E ?
 10. [ ] Les erreurs sont-elles gérées avec des signals et affichées à l'utilisateur ?
+11. [ ] **Documentation JSDoc/TSDoc ajoutée pour les services, guards, et interceptors**
+
+## 📝 Documentation JSDoc/TSDoc (Obligatoire)
+
+Tu DOIS systématiquement :
+
+1. **Documenter les services HTTP** : Description complète avec `@usageNotes`
+2. **Documenter les guards** : Comportement et cas d'usage
+3. **Documenter les interceptors** : Quand ils s'appliquent et ce qu'ils font
+4. **Utiliser les tags Compodoc** : `@usageNotes`, `@category`, `@see`, `@throws`
+5. **Ajouter des exemples** : Dans `@usageNotes`
+6. **Documenter la gestion d'erreurs** : Types d'erreurs possibles avec `@throws`
+
+**Ne PAS documenter** : Méthodes privées triviales, tests simples
+
+### Exemple : Service HTTP
+
+````typescript
+/**
+ * Service for managing orders data and operations.
+ *
+ * Handles all HTTP requests related to orders.
+ *
+ * @usageNotes
+ * Inject this service:
+ * ```typescript
+ * private ordersService = inject(OrdersService);
+ * ```
+ *
+ * @see Order
+ * @category Data Access
+ */
+@Injectable({ providedIn: 'root' })
+export class OrdersService {
+  /**
+   * Retrieves all orders from the API.
+   *
+   * @returns Observable of orders array
+   * @throws {HttpErrorResponse} When API request fails
+   */
+  getOrders(): Observable<Order[]> {
+    return this.http.get<Order[]>(`${API_URL}/orders`);
+  }
+}
+````
+
+### Exemple : Guard
+
+````typescript
+/**
+ * Authentication guard to protect routes.
+ *
+ * Redirects to login page if user is not authenticated.
+ *
+ * @usageNotes
+ * Apply to routes in routing configuration:
+ * ```typescript
+ * {
+ *   path: 'orders',
+ *   canActivate: [authGuard]
+ * }
+ * ```
+ *
+ * @see AuthService
+ * @category Security
+ */
+export const authGuard: CanActivateFn = (route, state) => {
+  // Implementation
+};
+````
+
+### Exemple : Interceptor
+
+````typescript
+/**
+ * HTTP interceptor for adding authentication token to requests.
+ *
+ * Automatically adds Bearer token to all outgoing requests
+ * if user is authenticated.
+ *
+ * @usageNotes
+ * Configure in app.config.ts:
+ * ```typescript
+ * provideHttpClient(
+ *   withInterceptors([authInterceptor])
+ * )
+ * ```
+ *
+ * @see AuthService
+ * @category Security
+ */
+export const authInterceptor: HttpInterceptorFn = (req, next) => {
+  // Implementation
+};
+````
+
+### Vérification de la Documentation
+
+Après avoir créé du code documenté, vérifier avec :
+
+```bash
+npm run docs:coverage
+```
+
+L'objectif est d'avoir une couverture > 80%.
 
 ## 🚀 Exemples de Prompts que Tu Peux Traiter
 

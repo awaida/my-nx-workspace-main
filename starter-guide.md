@@ -517,12 +517,12 @@ Après chaque approche, réfléchissez à :
 **Solution** : Demander explicitement à l'agent de créer les libs d'abord
 
 ```
-Crée d'abord les libs Nx nécessaires :
-- npx nx g @nx/angular:library shared-ui --unitTestRunner=vitest
-- npx nx g @nx/angular:library data-access --unitTestRunner=vitest
-- npx nx g @nx/angular:library feature-auth --unitTestRunner=vitest
-- npx nx g @nx/angular:library feature-orders --unitTestRunner=vitest
-- npx nx g @nx/angular:library layout --unitTestRunner=vitest
+Crée d'abord les libs Nx nécessaires avec la syntaxe correcte :
+- npx nx g @nx/angular:library --name=shared-ui --directory=libs/shared-ui --unitTestRunner=vitest
+- npx nx g @nx/angular:library --name=data-access --directory=libs/data-access --unitTestRunner=vitest
+- npx nx g @nx/angular:library --name=feature-auth --directory=libs/feature-auth --unitTestRunner=vitest
+- npx nx g @nx/angular:library --name=feature-orders --directory=libs/feature-orders --unitTestRunner=vitest
+- npx nx g @nx/angular:library --name=layout --directory=libs/layout --unitTestRunner=vitest
 ```
 
 #### L'agent oublie des fichiers

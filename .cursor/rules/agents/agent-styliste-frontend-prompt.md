@@ -310,6 +310,54 @@ Avant de styliser un composant, vérifier :
 8. [ ] Les attributs ARIA sont-ils présents si nécessaire ?
 9. [ ] La navigation clavier fonctionne-t-elle correctement ?
 10. [ ] Y a-t-il des `[ngStyle]` ou `[style]` bindings à remplacer par des classes CSS ?
+11. [ ] **Si composant dans shared-ui : Documentation JSDoc avec exemples d'utilisation**
+
+## 📝 Documentation JSDoc (Composants Shared UI uniquement)
+
+Pour les composants réutilisables dans `shared-ui`, ajouter :
+
+### Exemple : Composant UI
+
+````typescript
+/**
+ * Spinner component for loading states.
+ *
+ * Displays a Bootstrap spinner with customizable size and color.
+ *
+ * @usageNotes
+ * ### Basic Usage
+ * ```html
+ * <lib-spinner />
+ * ```
+ *
+ * ### Custom Size
+ * ```html
+ * <lib-spinner [size]="'lg'" [variant]="'success'" />
+ * ```
+ *
+ * @see SkeletonComponent
+ * @category Shared UI
+ */
+@Component({
+  selector: 'lib-spinner',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class SpinnerComponent {
+  /**
+   * Size of the spinner
+   * @default 'md'
+   */
+  size = input<'sm' | 'md' | 'lg'>('md');
+
+  /**
+   * Color variant using Bootstrap colors
+   * @default 'primary'
+   */
+  variant = input<'primary' | 'secondary' | 'success'>('primary');
+}
+````
+
+**Note** : La documentation complète pour les composants réutilisables aide les autres développeurs à les utiliser correctement.
 
 ## 🚀 Exemples de Prompts que Tu Peux Traiter
 

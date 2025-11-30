@@ -47,6 +47,10 @@ Ce projet utilise **Nx** pour organiser le code en **monorepo** avec des bibliot
 
 #### `libs/feature-*/` - Features métier
 
+**Note** : `feature-*` est une convention de nommage, pas un dossier parent. Toutes les features sont au même niveau dans `libs/`.
+
+**Exemples** : `libs/feature-orders/`, `libs/feature-auth/`, `libs/feature-contacts/`
+
 - **Rôle** : Features métier isolées et lazy-loadées.
 - **Structure interne d'une feature** :
   - `components/` : Composants Smart (logique) et Dumb (présentation)
@@ -167,6 +171,16 @@ npx nx lint <project-name>
 ```
 error  A project tagged with "type:feature" can only depend on libs tagged with "type:data-access", "type:ui"
 ```
+
+#### ⚠️ Quand modifier les depConstraints
+
+Les `depConstraints` dans `eslint.config.mjs` (racine) sont **déjà configurés** pour ce projet.
+
+**Vous devez les modifier uniquement si** :
+1. Vous créez un **nouveau type** de lib (ex: `type:utils`, `type:config`)
+2. Vous changez les **règles de dépendances** entre types existants
+
+**Sinon** : Ajoutez simplement les tags dans `project.json` et les contraintes existantes s'appliqueront automatiquement.
 
 ### Pourquoi cette organisation Nx ?
 
