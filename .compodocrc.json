@@ -3,7 +3,6 @@
   "port": 8080,
   "theme": "material",
   "tsconfig": "apps/mini-crm/tsconfig.app.json",
-  "output": "docs/compodoc",
   "coverageTest": 80,
   "coverageMinimumPerFile": 70,
   "disablePrivate": true,
@@ -14,7 +13,6 @@
   "hideGenerator": false,
   "name": "Mini CRM - Documentation",
   "language": "fr-FR",
-  "silent": false,
-  "watch": false
+  "silent": false
 }
 

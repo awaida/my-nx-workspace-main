@@ -2,8 +2,7 @@
   "ci": {
     "collect": {
       "numberOfRuns": 2,
-      "staticDistDir": "./docs/compodoc",
-      "url": ["http://localhost:8080/index.html"],
+      "url": ["http://localhost:8080"],
       "settings": {
         "preset": "desktop"
       }

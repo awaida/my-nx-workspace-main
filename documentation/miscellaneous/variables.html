@@ -1,0 +1,744 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Mini CRM - Documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+        <link rel="stylesheet" href="../styles/material.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">Mini CRM - Documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content miscellaneous-variables">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Miscellaneous</li>
+  <li class="breadcrumb-item">Variables</li>
+</ol>
+
+<section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <ul class="index-list">
+                        <li>
+                            <a href="#API_CONFIG" title="libs/data-access/src/lib/config/api.config.ts" ><b>API_CONFIG</b>&nbsp;&nbsp;&nbsp;(libs/.../api.config.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#appConfig" title="apps/mini-crm/src/app/app.config.ts" ><b>appConfig</b>&nbsp;&nbsp;&nbsp;(apps/.../app.config.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#appRoutes" title="apps/mini-crm/src/app/app.routes.ts" ><b>appRoutes</b>&nbsp;&nbsp;&nbsp;(apps/.../app.routes.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#AUTH_ROUTES" title="libs/feature-auth/src/lib/auth.routes.ts" ><b>AUTH_ROUTES</b>&nbsp;&nbsp;&nbsp;(libs/.../auth.routes.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#authGuard" title="libs/feature-auth/src/lib/guards/auth.guard.ts" ><b>authGuard</b>&nbsp;&nbsp;&nbsp;(libs/.../auth.guard.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#authInterceptor" title="libs/feature-auth/src/lib/interceptors/auth.interceptor.ts" ><b>authInterceptor</b>&nbsp;&nbsp;&nbsp;(libs/.../auth.interceptor.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#bootstrap" title="libs/shared-ui/src/lib/confirm-modal/confirm-modal.component.ts" ><b>bootstrap</b>&nbsp;&nbsp;&nbsp;(libs/.../confirm-modal.component.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#bootstrap" title="libs/feature-orders/src/lib/components/order-list/order-list.component.ts" ><b>bootstrap</b>&nbsp;&nbsp;&nbsp;(libs/.../order-list.component.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#environment" title="apps/mini-crm/src/environments/environment.prod.ts" ><b>environment</b>&nbsp;&nbsp;&nbsp;(apps/.../environment.prod.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#environment" title="apps/mini-crm/src/environments/environment.ts" ><b>environment</b>&nbsp;&nbsp;&nbsp;(apps/.../environment.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#ORDERS_ROUTES" title="libs/feature-orders/src/lib/orders.routes.ts" ><b>ORDERS_ROUTES</b>&nbsp;&nbsp;&nbsp;(libs/.../orders.routes.ts)</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+    <h3>libs/data-access/src/lib/config/api.config.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="API_CONFIG"></a>
+                    <span class="name">
+                        <span ><b>API_CONFIG</b></span>
+                        <a href="#API_CONFIG"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new InjectionToken&lt;ApiConfig&gt;(&#x27;API_CONFIG&#x27;, {
+  providedIn: &#x27;root&#x27;,
+  factory: () &#x3D;&gt; ({
+    apiUrl: &#x27;http://localhost:3000&#x27;,
+  }),
+})</code>
+                    </td>
+                </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Token d&#39;injection pour la configuration de l&#39;API</p>
+<p>Permet d&#39;injecter la configuration de l&#39;API dans les services.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</section>
+    <h3>apps/mini-crm/src/app/app.config.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="appConfig"></a>
+                    <span class="name">
+                        <span ><b>appConfig</b></span>
+                        <a href="#appConfig"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>ApplicationConfig</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+  providers: [
+    provideZonelessChangeDetection(),
+    provideRouter(appRoutes),
+    provideHttpClient(),
+    // Configuration API
+    {
+      provide: API_CONFIG,
+      useValue: {
+        apiUrl: environment.apiUrl,
+      },
+    },
+    // TODO Formation : provideHttpClient(withInterceptors([authInterceptor]))
+  ],
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>apps/mini-crm/src/app/app.routes.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="appRoutes"></a>
+                    <span class="name">
+                        <span ><b>appRoutes</b></span>
+                        <a href="#appRoutes"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Route[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[
+  // Redirection par défaut vers la page de connexion
+  {
+    path: &#x27;&#x27;,
+    redirectTo: &#x27;auth/sign-in&#x27;,
+    pathMatch: &#x27;full&#x27;,
+  },
+
+  // Routes d&#x27;authentification (publiques)
+  {
+    path: &#x27;auth&#x27;,
+    loadChildren: () &#x3D;&gt;
+      import(&#x27;@mini-crm/feature-auth&#x27;).then((m) &#x3D;&gt; m.AUTH_ROUTES),
+  },
+
+  // Routes des commandes (protégées par authGuard)
+  {
+    path: &#x27;orders&#x27;,
+    loadChildren: () &#x3D;&gt;
+      import(&#x27;@mini-crm/feature-orders&#x27;).then((m) &#x3D;&gt; m.ORDERS_ROUTES),
+    // TODO: Décommenter quand authGuard sera implémenté
+    // canActivate: [authGuard],
+  },
+
+  // Route 404 (optionnel, à implémenter plus tard)
+  // {
+  //   path: &#x27;**&#x27;,
+  //   redirectTo: &#x27;auth/sign-in&#x27;,
+  // },
+]</code>
+                    </td>
+                </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Routes principales de l&#39;application</p>
+<p>Configuration avec lazy loading des features pour optimiser le bundle initial.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</section>
+    <h3>libs/feature-auth/src/lib/auth.routes.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="AUTH_ROUTES"></a>
+                    <span class="name">
+                        <span ><b>AUTH_ROUTES</b></span>
+                        <a href="#AUTH_ROUTES"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Routes</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[
+  {
+    path: &#x27;&#x27;,
+    redirectTo: &#x27;sign-in&#x27;,
+    pathMatch: &#x27;full&#x27;,
+  },
+  {
+    path: &#x27;sign-in&#x27;,
+    component: SignInComponent,
+  },
+  {
+    path: &#x27;sign-up&#x27;,
+    component: SignUpComponent,
+  },
+]</code>
+                    </td>
+                </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Authentication routes configuration.</p>
+<p>Defines routes for sign-in and sign-up pages.
+Used for lazy loading in the main application routes.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</section>
+    <h3>libs/feature-auth/src/lib/guards/auth.guard.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="authGuard"></a>
+                    <span class="name">
+                        <span ><b>authGuard</b></span>
+                        <a href="#authGuard"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>CanActivateFn</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>(_route, _state) &#x3D;&gt; {
+  // TODO Formation : Implémenter la vérification d&#x27;authentification
+  // Pour l&#x27;instant, le guard laisse passer toutes les routes pour le développement
+
+  // Code commenté pour la formation :
+  // const authService &#x3D; inject(AuthService);
+  // const router &#x3D; inject(Router);
+  //
+  // if (authService.isAuthenticated()) {
+  //   return true;
+  // }
+  //
+  // // Rediriger vers la page de connexion avec l&#x27;URL de retour
+  // return router.createUrlTree([&#x27;/auth/sign-in&#x27;], {
+  //   queryParams: { returnUrl: state.url }
+  // });
+
+  return true;
+}</code>
+                    </td>
+                </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Authentication guard to protect routes.</p>
+<p><strong>Note</strong>: Currently returns <code>true</code> to allow development.
+Will be implemented in training to check authentication status.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</section>
+    <h3>libs/feature-auth/src/lib/interceptors/auth.interceptor.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="authInterceptor"></a>
+                    <span class="name">
+                        <span ><b>authInterceptor</b></span>
+                        <a href="#authInterceptor"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>HttpInterceptorFn</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>(req, next) &#x3D;&gt; {
+  const authService &#x3D; inject(AuthService);
+  const token &#x3D; authService.token();
+
+  // Add Bearer token to request if available
+  if (token) {
+    req &#x3D; req.clone({
+      setHeaders: {
+        Authorization: &#x60;Bearer ${token}&#x60;,
+      },
+    });
+  }
+
+  return next(req);
+}</code>
+                    </td>
+                </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>HTTP interceptor to add Bearer token to authenticated requests.</p>
+<p>Automatically adds the Authorization header with Bearer token
+if a token is present in AuthService.</p>
+<p><strong>Note</strong>: This interceptor is functional but not registered yet.
+Will be registered in app.config.ts during training.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</section>
+    <h3>libs/shared-ui/src/lib/confirm-modal/confirm-modal.component.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="bootstrap"></a>
+                    <span class="name">
+                        <span ><b>bootstrap</b></span>
+                        <a href="#bootstrap"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>literal type</code>
+
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>libs/feature-orders/src/lib/components/order-list/order-list.component.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="bootstrap"></a>
+                    <span class="name">
+                        <span ><b>bootstrap</b></span>
+                        <a href="#bootstrap"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>literal type</code>
+
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>apps/mini-crm/src/environments/environment.prod.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="environment"></a>
+                    <span class="name">
+                        <span ><b>environment</b></span>
+                        <a href="#environment"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+  /**
+   * Indique si l&#x27;application est en mode production
+   */
+  production: true,
+
+  /**
+   * URL de base de l&#x27;API (production)
+   * À modifier selon l&#x27;URL de production réelle
+   */
+  apiUrl: &#x27;http://localhost:3000&#x27;,
+}</code>
+                    </td>
+                </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Environnement de production</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</section>
+    <h3>apps/mini-crm/src/environments/environment.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="environment"></a>
+                    <span class="name">
+                        <span ><b>environment</b></span>
+                        <a href="#environment"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+  /**
+   * Indique si l&#x27;application est en mode production
+   */
+  production: false,
+
+  /**
+   * URL de base de l&#x27;API (développement)
+   * Pointe vers json-server local
+   */
+  apiUrl: &#x27;http://localhost:3000&#x27;,
+}</code>
+                    </td>
+                </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Environnement de développement</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</section>
+    <h3>libs/feature-orders/src/lib/orders.routes.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ORDERS_ROUTES"></a>
+                    <span class="name">
+                        <span ><b>ORDERS_ROUTES</b></span>
+                        <a href="#ORDERS_ROUTES"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Routes</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[
+  {
+    path: &#x27;&#x27;,
+    component: OrderListComponent,
+  },
+  {
+    path: &#x27;add&#x27;,
+    component: OrderAddComponent,
+  },
+  {
+    path: &#x27;edit/:id&#x27;,
+    component: OrderEditComponent,
+  },
+]</code>
+                    </td>
+                </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Orders routes configuration.</p>
+<p>Defines routes for order list, add, and edit pages.
+Used for lazy loading in the main application routes.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</section>
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'miscellaneous-variables';
+            var COMPODOC_CURRENT_PAGE_URL = 'variables.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

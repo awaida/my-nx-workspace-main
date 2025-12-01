@@ -1,0 +1,1193 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Mini CRM - Documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+        <link rel="stylesheet" href="../styles/material.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">Mini CRM - Documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content injectable">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Injectables</li>
+  <li class="breadcrumb-item" >OrdersService</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>libs/data-access/src/lib/services/orders.service.ts</code>
+        </p>
+
+
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Service for managing orders data and operations.</p>
+<p>Handles all HTTP requests related to orders including CRUD operations.
+Automatically calculates totalHt and totalTtc before sending to the API.
+Refreshes the orders list after create, update, or delete operations.</p>
+<h3>Injecting the Service</h3>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-typescript">private readonly ordersService = inject(OrdersService);</code></pre></div><h3>Loading Orders</h3>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-typescript">this.ordersService.getAll().subscribe({
+  next: () =&gt; {
+    // Orders are automatically updated in ordersService.orders()
+    const orders = this.ordersService.orders();
+  },
+  error: (err) =&gt; console.error(&#39;Failed to load orders:&#39;, err)
+});</code></pre></div><h3>Creating an Order</h3>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-typescript">const newOrder: CreateOrder = {
+  customer: &#39;Acme Corp&#39;,
+  nbDays: 5,
+  tjm: 650,
+  tauxTva: 20
+};
+
+this.ordersService.create(newOrder).subscribe({
+  next: () =&gt; {
+    // Orders list is automatically refreshed
+  }
+});</code></pre></div><p>See Order
+See CreateOrder
+See UpdateOrder</p>
+
+            </p>
+
+
+
+            <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#error" >error</a>
+                            </li>
+                            <li>
+                                <a href="#loading" >loading</a>
+                            </li>
+                            <li>
+                                <a href="#orders" >orders</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#create" >create</a>
+                            </li>
+                            <li>
+                                <a href="#delete" >delete</a>
+                            </li>
+                            <li>
+                                <a href="#getAll" >getAll</a>
+                            </li>
+                            <li>
+                                <a href="#getById" >getById</a>
+                            </li>
+                            <li>
+                                <a href="#update" >update</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+
+            <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="create"></a>
+                    <span class="name">
+                        <span ><b>create</b></span>
+                        <a href="#create"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>create(orderData: <a href="../undefineds/CreateOrder.html" target="_self">CreateOrder</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="181"
+                                    class="link-to-prism">libs/data-access/src/lib/services/orders.service.ts:181</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Creates a new order.</p>
+<p>Calculates totalHt and totalTtc before sending to the API.
+Automatically refreshes the orders list after successful creation.</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-typescript">const newOrder: CreateOrder = {
+  customer: &#39;Acme Corp&#39;,
+  nbDays: 5,
+  tjm: 650,
+  tauxTva: 20
+};
+
+
+this.ordersService.create(newOrder).subscribe({
+  next: (order) =&gt; {
+    // Orders list is automatically refreshed
+    console.log(&#39;Created order:&#39;, order);
+  }
+});</code></pre></div></div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>orderData</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/typealiases.html#CreateOrder" target="_self" >CreateOrder</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>Order data without id and totals</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../interfaces/Order.html" target="_self" >Observable&lt;Order&gt;</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Observable of the created order</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="delete"></a>
+                    <span class="name">
+                        <span ><b>delete</b></span>
+                        <a href="#delete"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>delete(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="280"
+                                    class="link-to-prism">libs/data-access/src/lib/services/orders.service.ts:280</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Deletes an order by its ID.</p>
+<p>Automatically refreshes the orders list after successful deletion.</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-typescript">this.ordersService.delete(1).subscribe({
+  next: () =&gt; {
+    // Orders list is automatically refreshed
+    console.log(&#39;Order deleted&#39;);
+  }
+});</code></pre></div></div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>id</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>Order ID to delete</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;void&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Observable that completes when deletion is successful</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getAll"></a>
+                    <span class="name">
+                        <span ><b>getAll</b></span>
+                        <a href="#getAll"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getAll()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="99"
+                                    class="link-to-prism">libs/data-access/src/lib/services/orders.service.ts:99</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Retrieves all orders from the API.</p>
+<p>Updates the orders signal with the fetched data.</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-typescript">this.ordersService.getAll().subscribe({
+  next: () =&gt; {
+    const orders = this.ordersService.orders();
+    console.log(`Loaded ${orders.length} orders`);
+  }
+});</code></pre></div></div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../interfaces/Order.html" target="_self" >Observable&lt;Order[]&gt;</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Observable that completes when orders are loaded</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getById"></a>
+                    <span class="name">
+                        <span ><b>getById</b></span>
+                        <a href="#getById"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getById(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="132"
+                                    class="link-to-prism">libs/data-access/src/lib/services/orders.service.ts:132</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Retrieves an order by its ID.</p>
+<p>Returns the order from the local orders signal if available,
+otherwise fetches from the API.</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-typescript">this.ordersService.getById(1).subscribe({
+  next: (order) =&gt; console.log(&#39;Order:&#39;, order)
+});</code></pre></div></div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>id</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>Order ID</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../interfaces/Order.html" target="_self" >Observable&lt;Order&gt;</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Observable of the order</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="update"></a>
+                    <span class="name">
+                        <span ><b>update</b></span>
+                        <a href="#update"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>update(orderData: <a href="../undefineds/UpdateOrder.html" target="_self">UpdateOrder</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="235"
+                                    class="link-to-prism">libs/data-access/src/lib/services/orders.service.ts:235</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Updates an existing order.</p>
+<p>Calculates totalHt and totalTtc before sending to the API.
+Automatically refreshes the orders list after successful update.</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-typescript">const updatedOrder: UpdateOrder = {
+  id: 1,
+  customer: &#39;Updated Corp&#39;,
+  nbDays: 10,
+  tjm: 700,
+  tauxTva: 20
+};
+
+
+this.ordersService.update(updatedOrder).subscribe({
+  next: (order) =&gt; {
+    // Orders list is automatically refreshed
+    console.log(&#39;Updated order:&#39;, order);
+  }
+});</code></pre></div></div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>orderData</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/typealiases.html#UpdateOrder" target="_self" >UpdateOrder</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>Order data with id, without totals</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../interfaces/Order.html" target="_self" >Observable&lt;Order&gt;</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Observable of the updated order</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+            <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="error"></a>
+                    <span class="name">
+                        <span ><b>error</b></span>
+                        <a href="#error"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>this.#error.asReadonly()</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="80" class="link-to-prism">libs/data-access/src/lib/services/orders.service.ts:80</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Error message if an operation fails.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loading"></a>
+                    <span class="name">
+                        <span ><b>loading</b></span>
+                        <a href="#loading"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>this.#loading.asReadonly()</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="74" class="link-to-prism">libs/data-access/src/lib/services/orders.service.ts:74</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Loading state for operations.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="orders"></a>
+                    <span class="name">
+                        <span ><b>orders</b></span>
+                        <a href="#orders"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>this.#orders.asReadonly()</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="68" class="link-to-prism">libs/data-access/src/lib/services/orders.service.ts:68</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>List of all orders.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</section>
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable, inject, signal } from &#x27;@angular/core&#x27;;
+import { HttpClient, HttpErrorResponse } from &#x27;@angular/common/http&#x27;;
+import { Observable, catchError, throwError, tap } from &#x27;rxjs&#x27;;
+import { API_CONFIG } from &#x27;../config/api.config&#x27;;
+import type { Order, CreateOrder, UpdateOrder } from &#x27;../models/order.model&#x27;;
+
+/**
+ * Service for managing orders data and operations.
+ *
+ * Handles all HTTP requests related to orders including CRUD operations.
+ * Automatically calculates totalHt and totalTtc before sending to the API.
+ * Refreshes the orders list after create, update, or delete operations.
+ *
+ * @usageNotes
+ * ### Injecting the Service
+ * &#x60;&#x60;&#x60;typescript
+ * private readonly ordersService &#x3D; inject(OrdersService);
+ * &#x60;&#x60;&#x60;
+ *
+ * ### Loading Orders
+ * &#x60;&#x60;&#x60;typescript
+ * this.ordersService.getAll().subscribe({
+ *   next: () &#x3D;&gt; {
+ *     // Orders are automatically updated in ordersService.orders()
+ *     const orders &#x3D; this.ordersService.orders();
+ *   },
+ *   error: (err) &#x3D;&gt; console.error(&#x27;Failed to load orders:&#x27;, err)
+ * });
+ * &#x60;&#x60;&#x60;
+ *
+ * ### Creating an Order
+ * &#x60;&#x60;&#x60;typescript
+ * const newOrder: CreateOrder &#x3D; {
+ *   customer: &#x27;Acme Corp&#x27;,
+ *   nbDays: 5,
+ *   tjm: 650,
+ *   tauxTva: 20
+ * };
+ *
+ * this.ordersService.create(newOrder).subscribe({
+ *   next: () &#x3D;&gt; {
+ *     // Orders list is automatically refreshed
+ *   }
+ * });
+ * &#x60;&#x60;&#x60;
+ *
+ * @see Order
+ * @see CreateOrder
+ * @see UpdateOrder
+ * @category Data Access
+ */
+@Injectable({ providedIn: &#x27;root&#x27; })
+export class OrdersService {
+  private readonly http &#x3D; inject(HttpClient);
+  private readonly config &#x3D; inject(API_CONFIG);
+  private readonly apiUrl &#x3D; &#x60;${this.config.apiUrl}/orders&#x60;;
+
+  // Private writable signals
+  #orders &#x3D; signal&lt;Order[]&gt;([]);
+  #loading &#x3D; signal&lt;boolean&gt;(false);
+  #error &#x3D; signal&lt;string | null&gt;(null);
+
+  // Public readonly signals
+  /**
+   * List of all orders.
+   * @readonly
+   */
+  orders &#x3D; this.#orders.asReadonly();
+
+  /**
+   * Loading state for operations.
+   * @readonly
+   */
+  loading &#x3D; this.#loading.asReadonly();
+
+  /**
+   * Error message if an operation fails.
+   * @readonly
+   */
+  error &#x3D; this.#error.asReadonly();
+
+  /**
+   * Retrieves all orders from the API.
+   *
+   * Updates the orders signal with the fetched data.
+   *
+   * @returns Observable that completes when orders are loaded
+   *
+   * @example
+   * &#x60;&#x60;&#x60;typescript
+   * this.ordersService.getAll().subscribe({
+   *   next: () &#x3D;&gt; {
+   *     const orders &#x3D; this.ordersService.orders();
+   *     console.log(&#x60;Loaded ${orders.length} orders&#x60;);
+   *   }
+   * });
+   * &#x60;&#x60;&#x60;
+   */
+  getAll(): Observable&lt;Order[]&gt; {
+    this.#loading.set(true);
+    this.#error.set(null);
+
+    return this.http.get&lt;Order[]&gt;(this.apiUrl).pipe(
+      tap((orders) &#x3D;&gt; {
+        this.#orders.set(orders);
+        this.#loading.set(false);
+      }),
+      catchError((error: HttpErrorResponse) &#x3D;&gt; {
+        this.#loading.set(false);
+        this.#error.set(this.getErrorMessage(error));
+        return throwError(() &#x3D;&gt; error);
+      })
+    );
+  }
+
+  /**
+   * Retrieves an order by its ID.
+   *
+   * Returns the order from the local orders signal if available,
+   * otherwise fetches from the API.
+   *
+   * @param id - Order ID
+   * @returns Observable of the order
+   *
+   * @example
+   * &#x60;&#x60;&#x60;typescript
+   * this.ordersService.getById(1).subscribe({
+   *   next: (order) &#x3D;&gt; console.log(&#x27;Order:&#x27;, order)
+   * });
+   * &#x60;&#x60;&#x60;
+   */
+  getById(id: number): Observable&lt;Order&gt; {
+    // Try to get from local signal first
+    const localOrder &#x3D; this.#orders().find((o) &#x3D;&gt; o.id &#x3D;&#x3D;&#x3D; id);
+    if (localOrder) {
+      return new Observable((subscriber) &#x3D;&gt; {
+        subscriber.next(localOrder);
+        subscriber.complete();
+      });
+    }
+
+    // Otherwise fetch from API
+    this.#loading.set(true);
+    this.#error.set(null);
+
+    return this.http.get&lt;Order&gt;(&#x60;${this.apiUrl}/${id}&#x60;).pipe(
+      catchError((error: HttpErrorResponse) &#x3D;&gt; {
+        this.#loading.set(false);
+        this.#error.set(this.getErrorMessage(error));
+        return throwError(() &#x3D;&gt; error);
+      })
+    );
+  }
+
+  /**
+   * Creates a new order.
+   *
+   * Calculates totalHt and totalTtc before sending to the API.
+   * Automatically refreshes the orders list after successful creation.
+   *
+   * @param orderData - Order data without id and totals
+   * @returns Observable of the created order
+   *
+   * @example
+   * &#x60;&#x60;&#x60;typescript
+   * const newOrder: CreateOrder &#x3D; {
+   *   customer: &#x27;Acme Corp&#x27;,
+   *   nbDays: 5,
+   *   tjm: 650,
+   *   tauxTva: 20
+   * };
+   *
+   * this.ordersService.create(newOrder).subscribe({
+   *   next: (order) &#x3D;&gt; {
+   *     // Orders list is automatically refreshed
+   *     console.log(&#x27;Created order:&#x27;, order);
+   *   }
+   * });
+   * &#x60;&#x60;&#x60;
+   */
+  create(orderData: CreateOrder): Observable&lt;Order&gt; {
+    this.#loading.set(true);
+    this.#error.set(null);
+
+    // Calculate totals before sending
+    const totalHt &#x3D; orderData.nbDays * orderData.tjm;
+    const totalTtc &#x3D; totalHt * (1 + orderData.tauxTva / 100);
+
+    const orderPayload: Omit&lt;Order, &#x27;id&#x27;&gt; &#x3D; {
+      ...orderData,
+      totalHt,
+      totalTtc,
+    };
+
+    return this.http.post&lt;Order&gt;(this.apiUrl, orderPayload).pipe(
+      tap(() &#x3D;&gt; {
+        // Refresh orders list after successful creation
+        this.refresh();
+      }),
+      catchError((error: HttpErrorResponse) &#x3D;&gt; {
+        this.#loading.set(false);
+        this.#error.set(this.getErrorMessage(error));
+        return throwError(() &#x3D;&gt; error);
+      })
+    );
+  }
+
+  /**
+   * Updates an existing order.
+   *
+   * Calculates totalHt and totalTtc before sending to the API.
+   * Automatically refreshes the orders list after successful update.
+   *
+   * @param orderData - Order data with id, without totals
+   * @returns Observable of the updated order
+   *
+   * @example
+   * &#x60;&#x60;&#x60;typescript
+   * const updatedOrder: UpdateOrder &#x3D; {
+   *   id: 1,
+   *   customer: &#x27;Updated Corp&#x27;,
+   *   nbDays: 10,
+   *   tjm: 700,
+   *   tauxTva: 20
+   * };
+   *
+   * this.ordersService.update(updatedOrder).subscribe({
+   *   next: (order) &#x3D;&gt; {
+   *     // Orders list is automatically refreshed
+   *     console.log(&#x27;Updated order:&#x27;, order);
+   *   }
+   * });
+   * &#x60;&#x60;&#x60;
+   */
+  update(orderData: UpdateOrder): Observable&lt;Order&gt; {
+    this.#loading.set(true);
+    this.#error.set(null);
+
+    // Calculate totals before sending
+    const totalHt &#x3D; orderData.nbDays * orderData.tjm;
+    const totalTtc &#x3D; totalHt * (1 + orderData.tauxTva / 100);
+
+    const orderPayload: Order &#x3D; {
+      ...orderData,
+      totalHt,
+      totalTtc,
+    };
+
+    return this.http.put&lt;Order&gt;(&#x60;${this.apiUrl}/${orderData.id}&#x60;, orderPayload).pipe(
+      tap(() &#x3D;&gt; {
+        // Refresh orders list after successful update
+        this.refresh();
+      }),
+      catchError((error: HttpErrorResponse) &#x3D;&gt; {
+        this.#loading.set(false);
+        this.#error.set(this.getErrorMessage(error));
+        return throwError(() &#x3D;&gt; error);
+      })
+    );
+  }
+
+  /**
+   * Deletes an order by its ID.
+   *
+   * Automatically refreshes the orders list after successful deletion.
+   *
+   * @param id - Order ID to delete
+   * @returns Observable that completes when deletion is successful
+   *
+   * @example
+   * &#x60;&#x60;&#x60;typescript
+   * this.ordersService.delete(1).subscribe({
+   *   next: () &#x3D;&gt; {
+   *     // Orders list is automatically refreshed
+   *     console.log(&#x27;Order deleted&#x27;);
+   *   }
+   * });
+   * &#x60;&#x60;&#x60;
+   */
+  delete(id: number): Observable&lt;void&gt; {
+    this.#loading.set(true);
+    this.#error.set(null);
+
+    return this.http.delete&lt;void&gt;(&#x60;${this.apiUrl}/${id}&#x60;).pipe(
+      tap(() &#x3D;&gt; {
+        // Refresh orders list after successful deletion
+        this.refresh();
+      }),
+      catchError((error: HttpErrorResponse) &#x3D;&gt; {
+        this.#loading.set(false);
+        this.#error.set(this.getErrorMessage(error));
+        return throwError(() &#x3D;&gt; error);
+      })
+    );
+  }
+
+  /**
+   * Refreshes the orders list by calling getAll().
+   *
+   * Updates the orders signal with the latest data from the API.
+   * Called automatically after create, update, or delete operations.
+   *
+   * @internal
+   */
+  private refresh(): void {
+    this.getAll().subscribe({
+      next: (orders) &#x3D;&gt; {
+        this.#orders.set(orders);
+        this.#loading.set(false);
+      },
+      error: () &#x3D;&gt; {
+        // Error already handled in getAll()
+        this.#loading.set(false);
+      },
+    });
+  }
+
+  /**
+   * Gets a user-friendly error message from an HttpErrorResponse.
+   *
+   * @param error - HTTP error response
+   * @returns Error message string
+   * @internal
+   */
+  private getErrorMessage(error: HttpErrorResponse): string {
+    if (error.error instanceof ErrorEvent) {
+      return &#x60;Erreur réseau : ${error.error.message}&#x60;;
+    }
+
+    switch (error.status) {
+      case 404:
+        return &#x27;Commande non trouvée&#x27;;
+      case 400:
+        return &#x27;Données invalides&#x27;;
+      case 500:
+        return &#x27;Erreur serveur&#x27;;
+      default:
+        return &#x60;Erreur ${error.status} : ${error.message}&#x60;;
+    }
+  }
+}
+
+</code></pre>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
+            var COMPODOC_CURRENT_PAGE_URL = 'OrdersService.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

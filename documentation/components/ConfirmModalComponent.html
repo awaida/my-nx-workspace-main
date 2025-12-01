@@ -1,0 +1,776 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Mini CRM - Documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+        <link rel="stylesheet" href="../styles/material.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">Mini CRM - Documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  ConfirmModalComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>libs/shared-ui/src/lib/confirm-modal/confirm-modal.component.ts</code>
+</p>
+
+
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>Confirmation modal component for reusable confirmation dialogs.</p>
+<p>Displays a Bootstrap modal with customizable title and message.
+Emits a confirmation event when the user confirms the action.
+Uses Bootstrap JavaScript API to manage modal state.</p>
+<h3>Basic Usage</h3>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">&lt;lib-confirm-modal
+  [modalId]=&quot;&#39;deleteOrderModal&#39;&quot;
+  [title]=&quot;&#39;Supprimer la commande&#39;&quot;
+  [message]=&quot;&#39;Êtes-vous sûr de vouloir supprimer cette commande ?&#39;&quot;
+  (confirm)=&quot;onConfirm()&quot;
+/&gt;</code></pre></div><h3>With Default Title</h3>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">&lt;lib-confirm-modal
+  [modalId]=&quot;&#39;confirmModal&#39;&quot;
+  [message]=&quot;&#39;Voulez-vous continuer ?&#39;&quot;
+  (confirm)=&quot;handleConfirm()&quot;
+/&gt;</code></pre></div><h3>Multiple Modals on Same Page</h3>
+<p>Each modal must have a unique <code>modalId</code>:</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">&lt;lib-confirm-modal [modalId]=&quot;&#39;deleteModal&#39;&quot; ... /&gt;
+&lt;lib-confirm-modal [modalId]=&quot;&#39;cancelModal&#39;&quot; ... /&gt;</code></pre></div><p>See SpinnerComponent</p>
+
+    </p>
+
+
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+            <tr>
+                <td class="col-md-3">changeDetection</td>
+                <td class="col-md-9"><code>ChangeDetectionStrategy.OnPush</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>lib-confirm-modal</code></td>
+            </tr>
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./confirm-modal.component.html</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">styleUrl</td>
+                <td class="col-md-9"><code>./confirm-modal.component.scss</code></td>
+            </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#onConfirm" >onConfirm</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Inputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#message" >message</a>
+                            </li>
+                            <li>
+                                <a href="#modalId" >modalId</a>
+                            </li>
+                            <li>
+                                <a href="#title" >title</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Outputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#confirm" >confirm</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor()</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="101" class="link-to-prism">libs/shared-ui/src/lib/confirm-modal/confirm-modal.component.ts:101</a></div>
+                            </td>
+                        </tr>
+
+            </tbody>
+        </table>
+</section>
+
+    <section data-compodoc="block-inputs">
+    <h3 id="inputs">Inputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="message"></a>
+                        <b>message</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="84" class="link-to-prism">libs/shared-ui/src/lib/confirm-modal/confirm-modal.component.ts:84</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Confirmation message displayed in the modal body.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="modalId"></a>
+                        <b>modalId</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Required : </i>&nbsp;<b>true</b>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="73" class="link-to-prism">libs/shared-ui/src/lib/confirm-modal/confirm-modal.component.ts:73</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Unique identifier for the modal element.
+Required to manage multiple modals on the same page.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="title"></a>
+                        <b>title</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;Confirmation&#x27;</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="79" class="link-to-prism">libs/shared-ui/src/lib/confirm-modal/confirm-modal.component.ts:79</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Modal title displayed in the header.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+    <section data-compodoc="block-outputs">
+    <h3 id="outputs">Outputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="confirm"></a>
+                        <b>confirm</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="90" class="link-to-prism">libs/shared-ui/src/lib/confirm-modal/confirm-modal.component.ts:90</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Emitted when the user confirms the action.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onConfirm"></a>
+                    <span class="name">
+                        <span ><b>onConfirm</b></span>
+                        <a href="#onConfirm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onConfirm()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="120"
+                                    class="link-to-prism">libs/shared-ui/src/lib/confirm-modal/confirm-modal.component.ts:120</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Handles the confirm button click.
+Emits the confirm event and closes the modal.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
+  Component,
+  ChangeDetectionStrategy,
+  input,
+  output,
+  viewChild,
+  effect,
+  ElementRef,
+} from &#x27;@angular/core&#x27;;
+
+// Bootstrap Modal type from @types/bootstrap
+declare const bootstrap: {
+  Modal: new (
+    element: HTMLElement,
+    options?: { backdrop?: boolean | string; keyboard?: boolean }
+  ) &#x3D;&gt; {
+    show: () &#x3D;&gt; void;
+    hide: () &#x3D;&gt; void;
+    dispose: () &#x3D;&gt; void;
+  };
+};
+
+/**
+ * Confirmation modal component for reusable confirmation dialogs.
+ *
+ * Displays a Bootstrap modal with customizable title and message.
+ * Emits a confirmation event when the user confirms the action.
+ * Uses Bootstrap JavaScript API to manage modal state.
+ *
+ * @usageNotes
+ * ### Basic Usage
+ * &#x60;&#x60;&#x60;html
+ * &lt;lib-confirm-modal
+ *   [modalId]&#x3D;&quot;&#x27;deleteOrderModal&#x27;&quot;
+ *   [title]&#x3D;&quot;&#x27;Supprimer la commande&#x27;&quot;
+ *   [message]&#x3D;&quot;&#x27;Êtes-vous sûr de vouloir supprimer cette commande ?&#x27;&quot;
+ *   (confirm)&#x3D;&quot;onConfirm()&quot;
+ * /&gt;
+ * &#x60;&#x60;&#x60;
+ *
+ * ### With Default Title
+ * &#x60;&#x60;&#x60;html
+ * &lt;lib-confirm-modal
+ *   [modalId]&#x3D;&quot;&#x27;confirmModal&#x27;&quot;
+ *   [message]&#x3D;&quot;&#x27;Voulez-vous continuer ?&#x27;&quot;
+ *   (confirm)&#x3D;&quot;handleConfirm()&quot;
+ * /&gt;
+ * &#x60;&#x60;&#x60;
+ *
+ * ### Multiple Modals on Same Page
+ * Each modal must have a unique &#x60;modalId&#x60;:
+ * &#x60;&#x60;&#x60;html
+ * &lt;lib-confirm-modal [modalId]&#x3D;&quot;&#x27;deleteModal&#x27;&quot; ... /&gt;
+ * &lt;lib-confirm-modal [modalId]&#x3D;&quot;&#x27;cancelModal&#x27;&quot; ... /&gt;
+ * &#x60;&#x60;&#x60;
+ *
+ * @see SpinnerComponent
+ * @category Shared UI
+ */
+@Component({
+  selector: &#x27;lib-confirm-modal&#x27;,
+  imports: [],
+  templateUrl: &#x27;./confirm-modal.component.html&#x27;,
+  styleUrl: &#x27;./confirm-modal.component.scss&#x27;,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class ConfirmModalComponent {
+  /**
+   * Unique identifier for the modal element.
+   * Required to manage multiple modals on the same page.
+   * @required
+   */
+  modalId &#x3D; input.required&lt;string&gt;();
+
+  /**
+   * Modal title displayed in the header.
+   * @default &#x27;Confirmation&#x27;
+   */
+  title &#x3D; input&lt;string&gt;(&#x27;Confirmation&#x27;);
+
+  /**
+   * Confirmation message displayed in the modal body.
+   */
+  message &#x3D; input&lt;string&gt;();
+
+  /**
+   * Emitted when the user confirms the action.
+   * @event
+   */
+  confirm &#x3D; output&lt;void&gt;();
+
+  /**
+   * Reference to the modal DOM element for Bootstrap API access.
+   */
+  private readonly modalElement &#x3D; viewChild&lt;ElementRef&lt;HTMLElement&gt;&gt;(&#x27;modalElement&#x27;);
+
+  /**
+   * Bootstrap Modal instance.
+   */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private modalInstance: any | null &#x3D; null;
+
+  constructor() {
+    // Initialize Bootstrap Modal instance when element is available
+    effect(() &#x3D;&gt; {
+      const element &#x3D; this.modalElement()?.nativeElement;
+      if (element &amp;&amp; !this.modalInstance &amp;&amp; typeof bootstrap !&#x3D;&#x3D; &#x27;undefined&#x27;) {
+        this.modalInstance &#x3D; new bootstrap.Modal(element, {
+          backdrop: true,
+          keyboard: true,
+        });
+      }
+    });
+  }
+
+  /**
+   * Handles the confirm button click.
+   * Emits the confirm event and closes the modal.
+   */
+  onConfirm(): void {
+    this.confirm.emit();
+    this.hideModal();
+  }
+
+  /**
+   * Closes the modal using Bootstrap API.
+   */
+  private hideModal(): void {
+    if (this.modalInstance) {
+      this.modalInstance.hide();
+    }
+  }
+}
+
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div
+  #modalElement
+  class&#x3D;&quot;modal fade&quot;
+  [id]&#x3D;&quot;modalId()&quot;
+  tabindex&#x3D;&quot;-1&quot;
+  aria-labelledby&#x3D;&quot;confirmModalLabel&quot;
+  aria-hidden&#x3D;&quot;true&quot;
+&gt;
+  &lt;div class&#x3D;&quot;modal-dialog&quot;&gt;
+    &lt;div class&#x3D;&quot;modal-content&quot;&gt;
+      &lt;div class&#x3D;&quot;modal-header&quot;&gt;
+        &lt;h5 class&#x3D;&quot;modal-title&quot; id&#x3D;&quot;confirmModalLabel&quot;&gt;{{ title() }}&lt;/h5&gt;
+        &lt;button
+          type&#x3D;&quot;button&quot;
+          class&#x3D;&quot;btn-close&quot;
+          data-bs-dismiss&#x3D;&quot;modal&quot;
+          aria-label&#x3D;&quot;Fermer&quot;
+        &gt;&lt;/button&gt;
+      &lt;/div&gt;
+      &lt;div class&#x3D;&quot;modal-body&quot;&gt;
+        @if (message()) {
+          &lt;p&gt;{{ message() }}&lt;/p&gt;
+        }
+      &lt;/div&gt;
+      &lt;div class&#x3D;&quot;modal-footer&quot;&gt;
+        &lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;btn btn-secondary&quot; data-bs-dismiss&#x3D;&quot;modal&quot;&gt;
+          Annuler
+        &lt;/button&gt;
+        &lt;button type&#x3D;&quot;button&quot; class&#x3D;&quot;btn btn-primary&quot; (click)&#x3D;&quot;onConfirm()&quot;&gt;
+          Confirmer
+        &lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+</code></pre>
+    </div>
+
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis-network.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div  #modalElement  class="modal fade"  [id]="modalId()"  tabindex="-1"  aria-labelledby="confirmModalLabel"  aria-hidden="true">  <div class="modal-dialog">    <div class="modal-content">      <div class="modal-header">        <h5 class="modal-title" id="confirmModalLabel">{{ title() }}</h5>        <button          type="button"          class="btn-close"          data-bs-dismiss="modal"          aria-label="Fermer"        ></button>      </div>      <div class="modal-body">        @if (message()) {          <p>{{ message() }}</p>        }      </div>      <div class="modal-footer">        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">          Annuler        </button>        <button type="button" class="btn btn-primary" (click)="onConfirm()">          Confirmer        </button>      </div>    </div>  </div></div></div>'
+    var COMPONENTS = [{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ConfirmModalComponent', 'selector': 'lib-confirm-modal'},{'name': 'DataAccess', 'selector': 'lib-data-access'},{'name': 'FeatureAuth', 'selector': 'lib-feature-auth'},{'name': 'FeatureOrders', 'selector': 'lib-feature-orders'},{'name': 'HeaderComponent', 'selector': 'lib-header'},{'name': 'Layout', 'selector': 'lib-layout'},{'name': 'LayoutComponent', 'selector': 'lib-layout'},{'name': 'OrderAddComponent', 'selector': 'lib-order-add'},{'name': 'OrderEditComponent', 'selector': 'lib-order-edit'},{'name': 'OrderFormComponent', 'selector': 'lib-order-form'},{'name': 'OrderListComponent', 'selector': 'lib-order-list'},{'name': 'SharedUi', 'selector': 'lib-shared-ui'},{'name': 'SidebarComponent', 'selector': 'lib-sidebar'},{'name': 'SignInComponent', 'selector': 'lib-sign-in'},{'name': 'SignUpComponent', 'selector': 'lib-sign-up'},{'name': 'SpinnerComponent', 'selector': 'lib-spinner'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'ConfirmModalComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'ConfirmModalComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>
