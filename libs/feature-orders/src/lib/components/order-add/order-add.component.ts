@@ -1,8 +1,7 @@
 import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
-import { Router } from '@angular/router';
-import { OrdersService } from '@mini-crm/data-access';
+import { OrdersFacade } from '@mini-crm/data-access';
 import { OrderFormComponent } from '../order-form/order-form.component';
-import type { CreateOrder } from '@mini-crm/data-access';
+import type { UpdateOrder, CreateOrder } from '@mini-crm/data-access';
 
 /**
  * Component for adding a new order.
@@ -20,7 +19,7 @@ import type { CreateOrder } from '@mini-crm/data-access';
  * ```
  *
  * @see OrderFormComponent
- * @see OrdersService
+ * @see OrdersFacade
  * @see OrderEditComponent
  * @category Feature Orders
  */
@@ -32,26 +31,21 @@ import type { CreateOrder } from '@mini-crm/data-access';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OrderAddComponent {
-  private readonly ordersService = inject(OrdersService);
-  private readonly router = inject(Router);
+  private readonly ordersFacade = inject(OrdersFacade);
 
   /**
    * Handles the save event from OrderFormComponent.
-   * Creates a new order and navigates to the orders list on success.
+   * Dispatches add action to NgRx store with redirect to orders list.
    *
-   * @param orderData - Order data to create
+   * @param orderData - Order data from form (UpdateOrder with id = 0)
    */
-  onSave(orderData: CreateOrder): void {
-    this.ordersService.create(orderData).subscribe({
-      next: () => {
-        // Navigate to orders list after successful creation
-        this.router.navigate(['/orders']);
-      },
-      error: (err) => {
-        console.error('Failed to create order:', err);
-        // Stay on the page to allow user to retry
-      },
-    });
+  onSave(orderData: UpdateOrder): void {
+    // Convert UpdateOrder to CreateOrder by removing id
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { id, ...createOrder } = orderData;
+
+    // Dispatch add action with redirect
+    this.ordersFacade.addOrder(createOrder as CreateOrder, '/orders');
   }
 
   /**
@@ -59,7 +53,7 @@ export class OrderAddComponent {
    * Navigates back to the orders list without saving.
    */
   onCancel(): void {
-    this.router.navigate(['/orders']);
+    // Navigate back using facade (could also use Router directly)
+    window.history.back();
   }
 }
-

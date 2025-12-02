@@ -1,8 +1,7 @@
 import { Component, ChangeDetectionStrategy, inject, OnInit, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { OrdersService } from '@mini-crm/data-access';
+import { OrdersFacade } from '@mini-crm/data-access';
 import { ConfirmModalComponent } from '@mini-crm/shared-ui';
-import type { Order as OrderType } from '@mini-crm/data-access';
 
 // Bootstrap Modal type from @types/bootstrap
 declare const bootstrap: {
@@ -38,9 +37,8 @@ declare const bootstrap: {
  * }
  * ```
  *
- * @see OrdersService
+ * @see OrdersFacade
  * @see ConfirmModalComponent
- * @see Order
  * @category Feature Orders
  */
 @Component({
@@ -51,7 +49,7 @@ declare const bootstrap: {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OrderListComponent implements OnInit {
-  private readonly ordersService = inject(OrdersService);
+  private readonly ordersFacade = inject(OrdersFacade);
   private readonly router = inject(Router);
 
   /**
@@ -65,33 +63,26 @@ export class OrderListComponent implements OnInit {
   private readonly MODAL_ID = 'deleteOrderModal';
 
   /**
-   * Orders list from the service.
+   * Orders list from the NgRx store.
    * @readonly
    */
-  orders = this.ordersService.orders as typeof this.ordersService.orders & { (): OrderType[] };
+  orders = this.ordersFacade.orders;
 
   /**
-   * Loading state from the service.
+   * Loading state from the NgRx store.
    * @readonly
    */
-  loading = this.ordersService.loading;
+  loading = this.ordersFacade.loading;
 
   /**
-   * Error message from the service.
+   * Error message from the NgRx store.
    * @readonly
    */
-  error = this.ordersService.error;
+  error = this.ordersFacade.error;
 
   ngOnInit(): void {
     // Load orders on component initialization
-    this.ordersService.getAll().subscribe({
-      next: () => {
-        // Orders are automatically updated in the service signal
-      },
-      error: (err) => {
-        console.error('Failed to load orders:', err);
-      },
-    });
+    this.ordersFacade.loadOrders();
   }
 
   /**
@@ -117,7 +108,7 @@ export class OrderListComponent implements OnInit {
 
   /**
    * Handles the confirmation from the modal.
-   * Deletes the order and refreshes the list.
+   * Dispatches delete action to NgRx store.
    */
   onConfirmDelete(): void {
     const orderId = this.orderToDeleteId();
@@ -125,16 +116,9 @@ export class OrderListComponent implements OnInit {
       return;
     }
 
-    this.ordersService.delete(orderId).subscribe({
-      next: () => {
-        // Orders list is automatically refreshed by the service
-        this.orderToDeleteId.set(null);
-      },
-      error: (err) => {
-        console.error('Failed to delete order:', err);
-        this.orderToDeleteId.set(null);
-      },
-    });
+    // Dispatch delete action to NgRx store
+    this.ordersFacade.deleteOrder(String(orderId));
+    this.orderToDeleteId.set(null);
   }
 
   /**

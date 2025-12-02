@@ -1,5 +1,11 @@
 {
-  "users": [],
+  "users": [
+    {
+      "email": "contact@2aiconcept.com",
+      "password": "$2a$10$HFdi7gDFMk8pSdUipdL.EevXnW3U3GliOm258Mzx/lAELNWJ3pWvS",
+      "id": 1
+    }
+  ],
   "orders": [
     {
       "id": 1,
@@ -27,6 +33,15 @@
       "tauxTva": 20,
       "totalHt": 1800,
       "totalTtc": 2160
+    },
+    {
+      "id": 4,
+      "customer": "ORSYS",
+      "nbDays": 4,
+      "tjm": 100,
+      "tauxTva": 20,
+      "totalHt": 400,
+      "totalTtc": 480
     }
   ]
 }
