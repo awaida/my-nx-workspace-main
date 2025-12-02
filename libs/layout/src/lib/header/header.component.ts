@@ -1,5 +1,6 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { AuthService } from '@mini-crm/data-access';
 
 /**
  * Header component for the application.
@@ -32,5 +33,9 @@ import { RouterLink } from '@angular/router';
   styleUrl: './header.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HeaderComponent {}
-
+export class HeaderComponent {
+  authService = inject(AuthService);
+  logout(): void {
+    this.authService.logout();
+  }
+}

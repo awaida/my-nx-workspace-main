@@ -12,7 +12,7 @@
       "options": {
         "outputPath": "dist/apps/mini-crm",
         "browser": "apps/mini-crm/src/main.ts",
-        "polyfills": ["zone.js"],
+        "polyfills": [],
         "tsConfig": "apps/mini-crm/tsconfig.app.json",
         "assets": [
           {

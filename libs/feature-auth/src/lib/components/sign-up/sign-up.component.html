@@ -1,8 +1,8 @@
-<div class="sign-up-container">
-  <div class="sign-up-card">
-    <div class="card">
-      <div class="card-body">
-        <h2 class="card-title text-center mb-4">Inscription</h2>
+<div class="d-flex align-items-center justify-content-center min-vh-100 p-3">
+  <div class="w-100 sign-up-card-wrapper">
+    <div class="card shadow-lg border-0">
+      <div class="card-body p-4">
+        <h2 class="card-title text-center mb-4 h3 fw-semibold">Inscription</h2>
 
         @if (error()) {
           <div class="alert alert-danger" role="alert">
@@ -100,7 +100,7 @@
         <div class="text-center">
           <p class="mb-0">
             Déjà un compte ?
-            <a routerLink="/auth/sign-in" class="sign-up-link">Se connecter</a>
+            <a routerLink="/auth/sign-in" class="text-primary text-decoration-none fw-medium">Se connecter</a>
           </p>
         </div>
       </div>

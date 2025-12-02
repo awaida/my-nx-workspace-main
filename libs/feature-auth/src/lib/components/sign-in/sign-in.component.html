@@ -1,13 +1,13 @@
-<div class="sign-in-container">
-  <div class="sign-in-card">
-    <div class="card">
-      <div class="card-body">
-        <h2 class="card-title text-center mb-4">Connexion</h2>
+<div class="d-flex align-items-center justify-content-center min-vh-100 p-3">
+  <div class="w-100 sign-in-card-wrapper">
+    <div class="card shadow-lg border-0">
+      <div class="card-body p-4">
+        <h2 class="card-title text-center mb-4 h3 fw-semibold">Connexion</h2>
 
         @if (error()) {
-          <div class="alert alert-danger" role="alert">
-            {{ error() }}
-          </div>
+        <div class="alert alert-danger" role="alert">
+          {{ error() }}
+        </div>
         }
 
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
@@ -24,9 +24,9 @@
               aria-describedby="email-error"
             />
             @if (isFieldInvalid('email')) {
-              <div id="email-error" class="invalid-feedback">
-                {{ getFieldError('email') }}
-              </div>
+            <div id="email-error" class="invalid-feedback">
+              {{ getFieldError('email') }}
+            </div>
             }
           </div>
 
@@ -43,9 +43,9 @@
               aria-describedby="password-error"
             />
             @if (isFieldInvalid('password')) {
-              <div id="password-error" class="invalid-feedback">
-                {{ getFieldError('password') }}
-              </div>
+            <div id="password-error" class="invalid-feedback">
+              {{ getFieldError('password') }}
+            </div>
             }
           </div>
 
@@ -57,15 +57,12 @@
               [disabled]="loading()"
             >
               @if (loading()) {
-                <span
-                  class="spinner-border spinner-border-sm me-2"
-                  role="status"
-                  aria-hidden="true"
-                ></span>
-                Connexion...
-              } @else {
-                Se connecter
-              }
+              <span
+                class="spinner-border spinner-border-sm me-2"
+                role="status"
+                aria-hidden="true"
+              ></span>
+              Connexion... } @else { Se connecter }
             </button>
           </div>
         </form>
@@ -74,11 +71,14 @@
         <div class="text-center">
           <p class="mb-0">
             Pas encore de compte ?
-            <a routerLink="/auth/sign-up" class="sign-in-link">S'inscrire</a>
+            <a
+              routerLink="/auth/sign-up"
+              class="text-primary text-decoration-none fw-medium"
+              >S'inscrire</a
+            >
           </p>
         </div>
       </div>
     </div>
   </div>
 </div>
-

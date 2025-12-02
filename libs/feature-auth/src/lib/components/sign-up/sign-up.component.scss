@@ -1,81 +1,18 @@
 // ============================================
-// 1. VARIABLES CSS CUSTOM DU COMPONENT
+// STYLES MINIMAUX - Bootstrap fait le reste
 // ============================================
 :host {
-  // Variables de layout
-  --sign-up-container-min-height: 100vh;
-  --sign-up-container-padding: 1.5rem;
-  --sign-up-card-width: 100%;
-  --sign-up-card-max-width: 400px;
-  --sign-up-card-padding: 2rem;
-
-  // Host display
   display: block;
-  min-height: var(--sign-up-container-min-height);
 }
 
-// ============================================
-// 2. STYLES DU COMPONENT (utilisent les variables CSS)
-// ============================================
-.sign-up-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: var(--sign-up-container-min-height);
-  padding: var(--sign-up-container-padding);
-  background-color: var(--bs-light);
+// Largeur max de la card (Bootstrap n'a pas de classe pour 500px)
+.sign-up-card-wrapper {
+  max-width: 500px;
 }
 
-.sign-up-card {
-  width: var(--sign-up-card-width);
-  max-width: var(--sign-up-card-max-width);
+// Focus visible pour accessibilité (amélioration Bootstrap)
+a.text-primary:focus {
+  outline: 2px solid var(--bs-primary);
+  outline-offset: 2px;
+  border-radius: 2px;
 }
-
-.card {
-  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075),
-    0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-  border: none;
-}
-
-.card-body {
-  padding: var(--sign-up-card-padding);
-}
-
-.card-title {
-  font-size: 1.75rem;
-  font-weight: 600;
-  color: var(--bs-dark);
-}
-
-.sign-up-link {
-  color: var(--bs-primary);
-  text-decoration: none;
-  font-weight: 500;
-
-  &:hover,
-  &:focus {
-    color: var(--bs-primary);
-    text-decoration: underline;
-  }
-
-  &:focus {
-    outline: 2px solid var(--bs-primary);
-    outline-offset: 2px;
-    border-radius: 2px;
-  }
-}
-
-// ============================================
-// 3. RESPONSIVE (si nécessaire)
-// ============================================
-@media (max-width: 768px) {
-  :host {
-    --sign-up-container-padding: 1rem;
-    --sign-up-card-padding: 1.5rem;
-  }
-
-  .card-title {
-    font-size: 1.5rem;
-  }
-}
-

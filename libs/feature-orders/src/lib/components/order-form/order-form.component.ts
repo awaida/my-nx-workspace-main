@@ -7,6 +7,7 @@ import {
   computed,
   effect,
 } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { DecimalPipe } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import type { Order, UpdateOrder } from '@mini-crm/data-access';
@@ -91,7 +92,14 @@ export class OrderFormComponent {
     customer: ['', [Validators.required, Validators.minLength(2)]],
     nbDays: [1, [Validators.required, Validators.min(1)]],
     tjm: [0, [Validators.required, Validators.min(0)]],
-    tauxTva: [20, [Validators.required, Validators.min(0), Validators.max(100)]],
+    tauxTva: [
+      20,
+      [Validators.required, Validators.min(0), Validators.max(100)],
+    ],
+  });
+
+  private formValues = toSignal(this.form.valueChanges, {
+    initialValue: this.form.value,
   });
 
   /**
@@ -100,8 +108,9 @@ export class OrderFormComponent {
    * @computed
    */
   totalHt = computed(() => {
-    const nbDays = this.form.value.nbDays ?? 0;
-    const tjm = this.form.value.tjm ?? 0;
+    const values = this.formValues();
+    const nbDays = values?.nbDays ?? 0;
+    const tjm = values?.tjm ?? 0;
     return nbDays * tjm;
   });
 
@@ -111,8 +120,9 @@ export class OrderFormComponent {
    * @computed
    */
   totalTtc = computed(() => {
+    const values = this.formValues();
     const totalHt = this.totalHt();
-    const tauxTva = this.form.value.tauxTva ?? 0;
+    const tauxTva = values?.tauxTva ?? 0;
     return totalHt * (1 + tauxTva / 100);
   });
 
@@ -156,7 +166,12 @@ export class OrderFormComponent {
     const formValue = this.form.value;
     const orderValue = this.order();
 
-    if (!formValue.customer || formValue.nbDays === null || formValue.tjm === null || formValue.tauxTva === null) {
+    if (
+      !formValue.customer ||
+      formValue.nbDays === null ||
+      formValue.tjm === null ||
+      formValue.tauxTva === null
+    ) {
       return;
     }
 
@@ -169,7 +184,6 @@ export class OrderFormComponent {
       tauxTva: formValue.tauxTva ?? 0,
     };
     this.save.emit(updateOrder);
-
   }
 
   /**
@@ -222,4 +236,3 @@ export class OrderFormComponent {
     return null;
   }
 }
-

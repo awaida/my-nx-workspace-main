@@ -1,12 +1,15 @@
-import { Injectable, signal, computed } from '@angular/core';
-import { Observable, of, delay, tap } from 'rxjs';
+import { Injectable, signal, computed, inject } from '@angular/core';
+import { Observable, tap, catchError } from 'rxjs';
 import type {
   User,
   LoginRequest,
   RegisterRequest,
   AuthResponse,
 } from '../models/auth.model';
-
+import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { StorageService } from './storage.service';
+import { API_CONFIG } from '../config/api.config';
 /**
  * Authentication service for user login, registration, and session management.
  *
@@ -51,6 +54,13 @@ export class AuthService {
   #token = signal<string | null>(null);
   #user = signal<User | null>(null);
 
+  private readonly http = inject(HttpClient);
+  private readonly config = inject(API_CONFIG);
+  private readonly apiUrl = `${this.config.apiUrl}`;
+
+  private readonly storageService = inject(StorageService);
+  private readonly router = inject(Router);
+
   // Public readonly signals
   /**
    * Current authentication token.
@@ -69,6 +79,11 @@ export class AuthService {
    * @computed
    */
   isAuthenticated = computed(() => !!this.#token());
+
+  constructor() {
+    // Restore session from localStorage on service initialization
+    this.restoreSession();
+  }
 
   /**
    * Signs in a user with email and password.
@@ -89,19 +104,15 @@ export class AuthService {
    * ```
    */
   signIn(credentials: LoginRequest): Observable<AuthResponse> {
-    // Mock implementation - returns mock data after a delay
-    const mockResponse: AuthResponse = {
-      accessToken: 'mock-jwt-token-' + Date.now(),
-      user: {
-        id: 1,
-        email: credentials.email,
-      },
-    };
-
-    return of(mockResponse).pipe(
-      delay(500), // Simulate network delay
-      tap((response) => this.updateAuthState(response)) // Update signals automatically
-    );
+    return this.http
+      .post<AuthResponse>(`${this.apiUrl}/login`, credentials)
+      .pipe(
+        tap((response) => this.handleAuthSuccess(response)),
+        catchError((error) => {
+          console.error('Signin error:', error);
+          throw error;
+        })
+      );
   }
 
   /**
@@ -123,25 +134,21 @@ export class AuthService {
    * ```
    */
   signUp(credentials: RegisterRequest): Observable<AuthResponse> {
-    // Mock implementation - returns mock data after a delay
-    const mockResponse: AuthResponse = {
-      accessToken: 'mock-jwt-token-' + Date.now(),
-      user: {
-        id: Math.floor(Math.random() * 1000) + 1,
-        email: credentials.email,
-      },
-    };
-
-    return of(mockResponse).pipe(
-      delay(500), // Simulate network delay
-      tap((response) => this.updateAuthState(response)) // Update signals automatically
-    );
+    return this.http
+      .post<AuthResponse>(`${this.apiUrl}/register`, credentials)
+      .pipe(
+        tap((response) => this.handleAuthSuccess(response)),
+        catchError((error) => {
+          console.error('Signup error:', error);
+          throw error;
+        })
+      );
   }
 
   /**
    * Signs out the current user.
    *
-   * Clears the authentication token and user data.
+   * Clears the authentication token and user data from memory and localStorage.
    *
    * @example
    * ```typescript
@@ -152,6 +159,9 @@ export class AuthService {
   logout(): void {
     this.#token.set(null);
     this.#user.set(null);
+    this.storageService.removeItem('auth_token');
+    this.storageService.removeItem('current_user');
+    this.router.navigate(['/auth/sign-in']);
   }
 
   /**
@@ -165,5 +175,44 @@ export class AuthService {
     this.#token.set(response.accessToken);
     this.#user.set(response.user);
   }
-}
 
+  /**
+   * Handles successful authentication by updating state and persisting to localStorage.
+   *
+   * @internal
+   * @param response - Authentication response containing token and user
+   */
+  private handleAuthSuccess(response: AuthResponse): void {
+    this.#user.set(response.user);
+    this.#token.set(response.accessToken);
+    this.storageService.setItem('auth_token', response.accessToken);
+    this.storageService.setItem('current_user', JSON.stringify(response.user));
+    this.router.navigate(['/orders']);
+  }
+
+  /**
+   * Restores authentication session from localStorage.
+   *
+   * Called automatically on service initialization to restore user session
+   * after page refresh.
+   *
+   * @internal
+   */
+  private restoreSession(): void {
+    const token = this.storageService.getItem('auth_token');
+    const userJson = this.storageService.getItem('current_user');
+
+    if (token && userJson) {
+      try {
+        const user = JSON.parse(userJson) as User;
+        this.#token.set(token);
+        this.#user.set(user);
+      } catch (error) {
+        console.error('Error parsing stored user data:', error);
+        // Clear invalid data
+        this.storageService.removeItem('auth_token');
+        this.storageService.removeItem('current_user');
+      }
+    }
+  }
+}

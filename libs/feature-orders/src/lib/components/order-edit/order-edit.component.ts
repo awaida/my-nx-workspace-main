@@ -1,8 +1,8 @@
-import { Component, ChangeDetectionStrategy, inject, OnInit, signal, effect } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject, OnInit, effect } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { OrdersService } from '@mini-crm/data-access';
+import { OrdersFacade } from '@mini-crm/data-access';
 import { OrderFormComponent } from '../order-form/order-form.component';
-import type { Order, UpdateOrder } from '@mini-crm/data-access';
+import type { UpdateOrder } from '@mini-crm/data-access';
 
 /**
  * Component for editing an existing order.
@@ -25,7 +25,7 @@ import type { Order, UpdateOrder } from '@mini-crm/data-access';
  * the component automatically redirects to the orders list.
  *
  * @see OrderFormComponent
- * @see OrdersService
+ * @see OrdersFacade
  * @see OrderAddComponent
  * @category Feature Orders
  */
@@ -37,30 +37,30 @@ import type { Order, UpdateOrder } from '@mini-crm/data-access';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OrderEditComponent implements OnInit {
-  private readonly ordersService = inject(OrdersService);
+  private readonly ordersFacade = inject(OrdersFacade);
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
 
   /**
-   * Order to edit, loaded from the service.
+   * Order to edit, from NgRx store.
    * @readonly
    */
-  order = signal<Order | null>(null);
+  order = this.ordersFacade.selectedOrder;
 
   /**
-   * Loading state from the service.
+   * Loading state from NgRx store.
    * @readonly
    */
-  loading = this.ordersService.loading;
+  loading = this.ordersFacade.loading;
 
   /**
-   * Error message from the service.
+   * Error message from NgRx store.
    * @readonly
    */
-  error = this.ordersService.error;
+  error = this.ordersFacade.error;
 
   constructor() {
-    // Redirect to orders list if order becomes null (not found)
+    // Redirect to orders list if order becomes null (not found) and we have an error
     effect(() => {
       const orderValue = this.order();
       const errorValue = this.error();
@@ -91,36 +91,19 @@ export class OrderEditComponent implements OnInit {
       return;
     }
 
-    // Load order by ID
-    this.ordersService.getById(orderId).subscribe({
-      next: (order) => {
-        this.order.set(order);
-      },
-      error: (err) => {
-        console.error('Failed to load order:', err);
-        // Error handling will trigger redirect via effect
-        this.order.set(null);
-      },
-    });
+    // Dispatch action to load order by ID
+    this.ordersFacade.getOrderById(String(orderId));
   }
 
   /**
    * Handles the save event from OrderFormComponent.
-   * Updates the order and navigates to the orders list on success.
+   * Dispatches update action to NgRx store with redirect to orders list.
    *
    * @param orderData - Order data to update
    */
   onSave(orderData: UpdateOrder): void {
-    this.ordersService.update(orderData).subscribe({
-      next: () => {
-        // Navigate to orders list after successful update
-        this.router.navigate(['/orders']);
-      },
-      error: (err) => {
-        console.error('Failed to update order:', err);
-        // Stay on the page to allow user to retry
-      },
-    });
+    // Dispatch update action with redirect
+    this.ordersFacade.updateOrder(orderData, '/orders');
   }
 
   /**
