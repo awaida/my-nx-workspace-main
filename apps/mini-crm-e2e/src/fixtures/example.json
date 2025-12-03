@@ -1,0 +1,33 @@
+{
+  "users": [
+    {
+      "email": "test@example.com",
+      "password": "password123"
+    },
+    {
+      "email": "admin@example.com",
+      "password": "admin123"
+    }
+  ],
+  "orders": [
+    {
+      "id": 1,
+      "customer": "Acme Corp",
+      "nbDays": 10,
+      "tjm": 650,
+      "tauxTva": 20,
+      "totalHt": 6500,
+      "totalTtc": 7800
+    },
+    {
+      "id": 2,
+      "customer": "Tech Solutions",
+      "nbDays": 5,
+      "tjm": 500,
+      "tauxTva": 20,
+      "totalHt": 2500,
+      "totalTtc": 3000
+    }
+  ]
+}
+

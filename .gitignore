@@ -60,3 +60,9 @@ docs/compodoc
 **/bundle-report.html
 **/bundle-report.json
 **/bundle-report-gzip.html
+
+# Cypress
+**/cypress/videos
+**/cypress/screenshots
+**/cypress/downloads
+.cypress_cache

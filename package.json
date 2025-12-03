@@ -40,7 +40,9 @@
     "analyze": "source-map-explorer dist/apps/mini-crm/browser/**/*.js --html dist/apps/mini-crm/bundle-report.html",
     "analyze:json": "source-map-explorer dist/apps/mini-crm/browser/**/*.js --json dist/apps/mini-crm/bundle-report.json",
     "analyze:gzip": "source-map-explorer dist/apps/mini-crm/browser/**/*.js --gzip --html dist/apps/mini-crm/bundle-report-gzip.html",
-    "build:analyze": "npm run build:prod && npm run analyze"
+    "build:analyze": "npm run build:prod && npm run analyze",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run"
   },
   "private": true,
   "dependencies": {
@@ -70,6 +72,7 @@
     "@eslint/js": "^9.8.0",
     "@lhci/cli": "^0.15.1",
     "@nx/angular": "21.4.0",
+    "@nx/cypress": "^21.4.0",
     "@nx/eslint": "21.4.0",
     "@nx/eslint-plugin": "21.4.0",
     "@nx/js": "21.4.0",
@@ -87,6 +90,7 @@
     "@vitest/ui": "^3.0.0",
     "angular-eslint": "^20.0.0",
     "concurrently": "^8.2.2",
+    "cypress": "^13.17.0",
     "eslint": "^9.8.0",
     "eslint-config-prettier": "^10.0.0",
     "eslint-plugin-sonarjs": "^3.0.5",
