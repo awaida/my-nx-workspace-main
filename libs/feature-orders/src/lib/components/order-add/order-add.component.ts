@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
-import { OrdersFacade } from '@mini-crm/data-access';
+import { OrdersStore, type OrdersStoreType } from '@mini-crm/data-access';
 import { OrderFormComponent } from '../order-form/order-form.component';
 import type { UpdateOrder, CreateOrder } from '@mini-crm/data-access';
 
@@ -19,7 +19,7 @@ import type { UpdateOrder, CreateOrder } from '@mini-crm/data-access';
  * ```
  *
  * @see OrderFormComponent
- * @see OrdersFacade
+ * @see OrdersStore
  * @see OrderEditComponent
  * @category Feature Orders
  */
@@ -31,11 +31,11 @@ import type { UpdateOrder, CreateOrder } from '@mini-crm/data-access';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OrderAddComponent {
-  private readonly ordersFacade = inject(OrdersFacade);
+  private readonly store: OrdersStoreType = inject(OrdersStore);
 
   /**
    * Handles the save event from OrderFormComponent.
-   * Dispatches add action to NgRx store with redirect to orders list.
+   * Dispatches add action to SignalStore with redirect to orders list.
    *
    * @param orderData - Order data from form (UpdateOrder with id = 0)
    */
@@ -44,8 +44,11 @@ export class OrderAddComponent {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { id, ...createOrder } = orderData;
 
-    // Dispatch add action with redirect
-    this.ordersFacade.addOrder(createOrder as CreateOrder, '/orders');
+    // Add order via SignalStore with redirect
+    this.store.addOrder({
+      order: createOrder as CreateOrder,
+      redirectTo: '/orders',
+    });
   }
 
   /**
@@ -53,7 +56,6 @@ export class OrderAddComponent {
    * Navigates back to the orders list without saving.
    */
   onCancel(): void {
-    // Navigate back using facade (could also use Router directly)
     window.history.back();
   }
 }

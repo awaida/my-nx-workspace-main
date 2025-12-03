@@ -13,10 +13,5 @@ export * from './lib/services/storage.service';
 // Guards
 export * from './lib/guards/auth.guard';
 
-// NgRx Store - Orders
-export * from './lib/store/orders/orders.actions';
-export * from './lib/store/orders/orders.reducer';
-export * from './lib/store/orders/orders.selectors';
-export * from './lib/store/orders/orders.state';
-export * from './lib/store/orders/orders.facade';
-export * from './lib/store/orders/orders.effects';
+// NgRx SignalStore - Orders
+export * from './lib/store/orders';

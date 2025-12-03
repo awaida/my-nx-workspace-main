@@ -8,15 +8,6 @@
   ],
   "orders": [
     {
-      "id": 1,
-      "customer": "Acme Corp",
-      "nbDays": 5,
-      "tjm": 650,
-      "tauxTva": 20,
-      "totalHt": 3250,
-      "totalTtc": 3900
-    },
-    {
       "id": 2,
       "customer": "Tech Solutions",
       "nbDays": 10,
@@ -42,6 +33,15 @@
       "tauxTva": 20,
       "totalHt": 400,
       "totalTtc": 480
+    },
+    {
+      "customer": "PLB Consultant",
+      "nbDays": 3,
+      "tjm": 500,
+      "tauxTva": 20,
+      "totalHt": 1500,
+      "totalTtc": 1800,
+      "id": 5
     }
   ]
 }

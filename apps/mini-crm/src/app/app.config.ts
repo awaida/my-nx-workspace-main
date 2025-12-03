@@ -1,14 +1,10 @@
 import {
   ApplicationConfig,
   provideZonelessChangeDetection,
-  isDevMode,
 } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideHttpClient } from '@angular/common/http';
-import { provideStore } from '@ngrx/store';
-import { provideEffects } from '@ngrx/effects';
-import { provideStoreDevtools } from '@ngrx/store-devtools';
-import { API_CONFIG, ordersReducer, orderEffects } from '@mini-crm/data-access';
+import { API_CONFIG } from '@mini-crm/data-access';
 import { appRoutes } from './app.routes';
 import { environment } from '../environments/environment';
 
@@ -18,23 +14,6 @@ export const appConfig: ApplicationConfig = {
     provideRouter(appRoutes),
     provideHttpClient(),
 
-    // NgRx Store
-    provideStore({
-      orders: ordersReducer,
-    }),
-
-    // NgRx Effects
-    provideEffects(orderEffects),
-
-    // NgRx DevTools (development only)
-    provideStoreDevtools({
-      maxAge: 25,
-      logOnly: !isDevMode(),
-      autoPause: true,
-      trace: false,
-      traceLimit: 75,
-    }),
-
     // Configuration API
     {
       provide: API_CONFIG,
@@ -43,5 +22,8 @@ export const appConfig: ApplicationConfig = {
       },
     },
     // TODO Formation : provideHttpClient(withInterceptors([authInterceptor]))
+
+    // Note: NgRx SignalStore (OrdersStore) is automatically provided
+    // via providedIn: 'root' - no configuration needed here!
   ],
 };

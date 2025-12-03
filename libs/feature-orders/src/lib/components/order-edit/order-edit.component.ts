@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy, inject, OnInit, effect } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { OrdersFacade } from '@mini-crm/data-access';
+import { OrdersStore, type OrdersStoreType } from '@mini-crm/data-access';
 import { OrderFormComponent } from '../order-form/order-form.component';
 import type { UpdateOrder } from '@mini-crm/data-access';
 
@@ -25,7 +25,7 @@ import type { UpdateOrder } from '@mini-crm/data-access';
  * the component automatically redirects to the orders list.
  *
  * @see OrderFormComponent
- * @see OrdersFacade
+ * @see OrdersStore
  * @see OrderAddComponent
  * @category Feature Orders
  */
@@ -37,27 +37,27 @@ import type { UpdateOrder } from '@mini-crm/data-access';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OrderEditComponent implements OnInit {
-  private readonly ordersFacade = inject(OrdersFacade);
+  private readonly store: OrdersStoreType = inject(OrdersStore);
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
 
   /**
-   * Order to edit, from NgRx store.
+   * Order to edit, from SignalStore.
    * @readonly
    */
-  order = this.ordersFacade.selectedOrder;
+  order = this.store.selectedOrder;
 
   /**
-   * Loading state from NgRx store.
+   * Loading state from SignalStore.
    * @readonly
    */
-  loading = this.ordersFacade.loading;
+  loading = this.store.loading;
 
   /**
-   * Error message from NgRx store.
+   * Error message from SignalStore.
    * @readonly
    */
-  error = this.ordersFacade.error;
+  error = this.store.error;
 
   constructor() {
     // Redirect to orders list if order becomes null (not found) and we have an error
@@ -91,19 +91,19 @@ export class OrderEditComponent implements OnInit {
       return;
     }
 
-    // Dispatch action to load order by ID
-    this.ordersFacade.getOrderById(String(orderId));
+    // Load order by ID via SignalStore
+    this.store.getOrderById(String(orderId));
   }
 
   /**
    * Handles the save event from OrderFormComponent.
-   * Dispatches update action to NgRx store with redirect to orders list.
+   * Dispatches update action to SignalStore with redirect to orders list.
    *
    * @param orderData - Order data to update
    */
   onSave(orderData: UpdateOrder): void {
-    // Dispatch update action with redirect
-    this.ordersFacade.updateOrder(orderData, '/orders');
+    // Update via SignalStore with redirect
+    this.store.updateOrder({ order: orderData, redirectTo: '/orders' });
   }
 
   /**
@@ -114,4 +114,3 @@ export class OrderEditComponent implements OnInit {
     this.router.navigate(['/orders']);
   }
 }
-
