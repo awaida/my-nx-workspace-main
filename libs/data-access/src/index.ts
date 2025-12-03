@@ -13,5 +13,8 @@ export * from './lib/services/storage.service';
 // Guards
 export * from './lib/guards/auth.guard';
 
+// Interceptors
+export * from './lib/interceptors';
+
 // NgRx SignalStore - Orders
 export * from './lib/store/orders';
